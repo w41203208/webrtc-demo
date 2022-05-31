@@ -1,0 +1,42 @@
+version: '3.8'
+services:
+  webrtc-frontend-dev:
+    container_name: webrtc-frontend
+    # image: "webrtc:dev"
+    build:
+      context: ./frontend
+      dockerfile: dockerfile.dev
+    command: ["yarn", "dev"]
+    ports:
+      - "3000:3000"
+    depends_on:
+      - webrtc-server
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./frontend/src:/webrtc/frontend/src
+  webrtc-server:
+    container_name: webrtc-server
+    # image: "webrtc-server:dev"
+    build:
+      context: ./server
+      dockerfile: dockerfile.server
+    command: ["yarn", "start"]
+    ports:
+      - "3001:3001"
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./server/src:/webrtc/server/src
+      - ./server/index.ts:/webrtc/server/index.ts
+  # webrtc-frontend-build-deploy:
+  #   container_name: webrtc-deploy
+  #   image: "webrtc:${RELEASE}"
+  #   build:
+  #     context: ./
+  #     dockerfile: dockerfile.deploy
+  #   ports:
+  #     - "8080:80"
+  #   stdin_open: true
+  #   tty: true
+    # entrypoint: /entrypoint.sh -d webrtc-frontend-dev:3000 -c 'echo "start web service here"';

@@ -1,0 +1,7 @@
+FROM node:16.13-alpine
+WORKDIR /webrtc/server
+COPY . .
+RUN npm install -g ts-node
+RUN yarn
+
+EXPOSE 3001

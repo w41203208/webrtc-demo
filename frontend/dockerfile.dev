@@ -1,0 +1,11 @@
+# Dockerfile to deploy a dev env
+# syntax=docker/dockerfile:dev
+FROM node:16.13 AS DEVRUN
+
+WORKDIR /webrtc/frontend
+
+COPY . .
+
+RUN yarn
+
+
